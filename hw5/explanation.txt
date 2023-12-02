@@ -1,1 +1,13 @@
 explanation:
+First I created a basic server using socket that takes a port number from the cmd line and the localhost ip.
+this server would serve clients using the threading module. Then using the paramiko module documentation and
+many examples online, I created a basic ssh server handler that rejects any failed logins from any user that
+wasn't part of the usernames.txt and any invalid login that was tried less than 5 times. Before doing this, I 
+had to change the .ssh/config on my machine to get around my client stopping at 3 ssh login attempts. Within
+my ssh server handler class I have a function called check_auth_password() and in this function is where I 
+handle counting how many failed logins there were. An interesting error I encountered was having the server 
+disconnecting a client (seemingly legally?) after authenticating the 5th invalid login. This issue was solved
+after I commented out a logging.info statement. I assume that I incorrectly set up my logging, but I found it 
+very weird that there were no error messages whatsoever, which lead to a few hours of painful snooping around.
+After all that, I implemented that after the client fails 5 times, the server makes a dummy shell that handles 
+commands like ls, cat, pwd, cp, exit, and echo.
